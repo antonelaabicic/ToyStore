@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to ToyStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .about-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<section class="hero d-flex align-items-center justify-content-center text-center" th:style="|background: url('@{/images/toy_bg.png}') center center / cover no-repeat; min-height: 100vh; text-shadow: 2px 2px 8px rgba(0,0,0,0.7);|">
+    <div>
+        <h1 class="display-3 fw-bold text-white">Welcome to ToyStore!</h1>
+        <a href="#about" class="btn btn-lg btn-outline-light btn-warning mt-4" style="scroll-behavior: smooth;">Learn More</a>
+    </div>
+</section>
+
+<section id="about" class="about-section">
+    <div class="container">
+        <h2 class="text-center mb-5">About Us</h2>
+        <div class="row align-items-center">
+            <div>
+                <p class="fs-5">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+                    Sed cursus ante dapibus diam. Nulla quis sem at nibh elementum imperdiet. Mauris fringilla leo
+                    quam, non vestibulum ipsum feugiat nec. Curabitur consectetur enim pretium tortor tincidunt, eget
+                    venenatis diam lacinia. Curabitur nibh lectus, lobortis a massa at, condimentum pulvinar tortor.
+                    Curabitur aliquet felis quis efficitur placerat. Class aptent taciti sociosqu ad litora torquent
+                    per conubia nostra, per inceptos himenaeos. Sed risus lorem, consectetur in felis eu, ornare
+                    vehicula turpis. Ut imperdiet et felis eget sollicitudin. Aliquam sit amet sapien dignissim,
+                    maximus velit vitae, congue tortor. Ut lobortis erat auctor odio euismod condimentum. Proin
+                    viverra augue diam, consequat sodales dui sollicitudin ac. Aliquam in neque vel nisl commodo
+                    venenatis vel vel lacus. Suspendisse vel nunc libero.
+                </p>
+                <p class="fs-5">
+                    Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Vestibulum lacinia
+                    arcu eget nulla. Duis vitae nulla nulla. Sed consectetur condimentum rhoncus. Aliquam tincidunt
+                    fermentum aliquam. Sed dapibus lectus a nibh vulputate varius. Aenean a mollis elit. Praesent id
+                    nulla egestas, pretium est eget, laoreet sapien. Duis aliquet imperdiet risus, vitae aliquam nulla
+                    interdum id. Donec blandit magna vitae mi auctor, eget pharetra leo pretium. Nulla id arcu eleifend,
+                    aliquet enim quis, egestas erat. Quisque tempus semper nisl, ac luctus mauris vulputate vitae. Cras
+                    vehicula elementum placerat. Vivamus malesuada eros a nulla interdum suscipit. Nulla sagittis non
+                    leo sed cursus.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

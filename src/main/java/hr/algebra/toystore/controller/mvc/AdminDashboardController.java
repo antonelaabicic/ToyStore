@@ -23,6 +23,8 @@ public class AdminDashboardController {
     private final ToyService toyService;
     private final ToyCategoryService toyCategoryService;
 
+    private static final String REDIRECT_DASHBOARD = "redirect:/admin/dashboard";
+
     @GetMapping("/dashboard")
     public String showAdminDashboard(Model model) {
         model.addAttribute("toys", toyService.findAll());
@@ -37,31 +39,31 @@ public class AdminDashboardController {
     @PostMapping("/category")
     public String addCategory(@ModelAttribute ToyCategoryDto categoryForm) {
         toyCategoryService.save(categoryForm);
-        return "redirect:/admin/dashboard";
+        return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy")
     public String addToy(@ModelAttribute ToyDto toyForm, @RequestParam("image") MultipartFile file) {
         toyService.save(toyForm, file);
-        return "redirect:/admin/dashboard";
+        return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/category/delete/{id}")
     public String deleteCategory(@PathVariable Integer id) {
         toyCategoryService.deleteById(id);
-        return "redirect:/admin/dashboard";
+        return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/delete/{id}")
     public String deleteToy(@PathVariable Integer id) {
         toyService.deleteById(id);
-        return "redirect:/admin/dashboard";
+        return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/category/edit")
     public String editCategory(@ModelAttribute ToyCategoryDto categoryForm) {
         toyCategoryService.update(categoryForm.getId(), categoryForm);
-        return "redirect:/admin/dashboard";
+        return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/edit")
@@ -71,7 +73,7 @@ public class AdminDashboardController {
         } else {
             toyService.update(toyForm.getId(), toyForm);
         }
-        return "redirect:/admin/dashboard";
+        return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/search")

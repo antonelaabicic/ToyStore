@@ -28,7 +28,7 @@ public class ToyMapper {
                 dto.getDescription(),
                 dto.getPrice(),
                 dto.getStock(),
-                category, // probably format isn't needed
+                category,
                 dto.getImageUrl()
         );
     }

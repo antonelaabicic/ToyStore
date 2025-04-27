@@ -41,25 +41,6 @@ public class ToyServiceImpl implements ToyService {
                 .map(ToyMapper::toDto);
     }
 
-//    @Override
-//    public void save(ToyDto dto, MultipartFile imageFile) {
-//        ToyCategory toyCategory = toyCategoryRepository.findByName(
-//                StringFormatter.formatToDb(dto.getCategoryString())).orElseThrow(() -> new IllegalArgumentException("Category not found")
-//        );
-//
-//        String fileName = UUID.randomUUID() + "-" + imageFile.getOriginalFilename();
-//        Path imagePath = Paths.get("src/main/resources/static/images", fileName);
-//        try {
-//            Files.copy(imageFile.getInputStream(), imagePath);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        dto.setImageUrl("/images/" + fileName);
-//        dto.setId(null);
-//        toyRepository.save(ToyMapper.toEntity(dto, toyCategory));
-//    }
-
     @Override
     public void save(ToyDto dto, MultipartFile imageFile) {
         ToyCategory category = findCategoryByName(dto.getCategoryString());
