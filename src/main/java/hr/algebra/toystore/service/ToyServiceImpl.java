@@ -120,6 +120,13 @@ public class ToyServiceImpl implements ToyService {
                 .toList();
     }
 
+    @Override
+    public List<ToyDto> findByCategoryId(Integer categoryId) {
+        return toyRepository.findByCategory_Id(categoryId).stream()
+                .map(ToyMapper::toDto)
+                .toList();
+    }
+
     private ToyCategory findCategoryByName(String categoryName) {
         return toyCategoryRepository.findByName(StringFormatter.formatToDb(categoryName))
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));

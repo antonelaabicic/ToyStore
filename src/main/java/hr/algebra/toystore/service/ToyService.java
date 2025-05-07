@@ -15,4 +15,5 @@ public interface ToyService {
     void update(Integer id, ToyDto dto);
     void updateWithImage(Integer id, ToyDto dto, MultipartFile imageFile);
     List<ToyDto> findByCriteria(ToySearchForm toySearchForm);
+    List<ToyDto> findByCategoryId(Integer categoryId);
 }

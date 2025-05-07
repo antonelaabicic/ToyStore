@@ -1,12 +1,15 @@
 package hr.algebra.toystore.controller.mvc;
 
 import hr.algebra.toystore.dto.ToyCategoryDto;
+import hr.algebra.toystore.dto.ToyDto;
 import hr.algebra.toystore.service.ToyCategoryService;
+import hr.algebra.toystore.service.ToyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,12 +17,22 @@ import java.util.List;
 @RequestMapping("/store")
 @AllArgsConstructor
 public class ToyStoreController {
+
+    private final ToyService toyService;
     private final ToyCategoryService toyCategoryService;
 
     @GetMapping("/toys")
-    public String showCategories(Model model) {
+    public String showCategorySelection(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+                                        Model model) {
         List<ToyCategoryDto> categories = toyCategoryService.findAll();
         model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategoryId", categoryId);
+
+        List<ToyDto> toys = (categoryId != null) ?
+                toyService.findByCategoryId(categoryId) :
+                List.of();
+
+        model.addAttribute("toys", toys);
         return "store/toys";
     }
 }
