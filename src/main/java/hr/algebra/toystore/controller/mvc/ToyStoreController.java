@@ -35,4 +35,15 @@ public class ToyStoreController {
         model.addAttribute("toys", toys);
         return "store/toys";
     }
+
+    @GetMapping("/toys/cards")
+    public String getToyCards(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+                              Model model) {
+        List<ToyDto> toys = (categoryId != null)
+                ? toyService.findByCategoryId(categoryId)
+                : List.of();
+
+        model.addAttribute("toys", toys);
+        return "store/toys :: #ajaxCardsPlaceholder";
+    }
 }
