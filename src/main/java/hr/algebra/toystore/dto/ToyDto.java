@@ -26,10 +26,6 @@ public class ToyDto {
     @DecimalMin(value = "0.0", message = "The price cannot be negative.")
     private BigDecimal price;
 
-    @NotNull(message = "Stock is required.")
-    @Min(value = 0, message = "Stock cannot be negative.")
-    private Integer stock;
-
     @NotEmpty(message = "Category name is required.")
     private String categoryString;
 
@@ -39,12 +35,11 @@ public class ToyDto {
     @Transient
     private MultipartFile image;
 
-    public ToyDto(Integer id, String name, String description, BigDecimal price, Integer stock, String categoryString, String imageUrl) {
+    public ToyDto(Integer id, String name, String description, BigDecimal price, String categoryString, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.stock = stock;
         this.categoryString = categoryString;
         this.imageUrl = imageUrl;
     }

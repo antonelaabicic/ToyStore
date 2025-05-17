@@ -26,9 +26,6 @@ public class Toy {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "stock")
-    private Integer stock;
-
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
     private ToyCategory category;
@@ -36,11 +33,10 @@ public class Toy {
     @Column(name = "IMAGE_URL")
     private String imageUrl;
 
-    public Toy(String name, String description, BigDecimal price, Integer stock, ToyCategory category, String imageUrl) {
+    public Toy(String name, String description, BigDecimal price, ToyCategory category, String imageUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.stock = stock;
         this.category = category;
         this.imageUrl = imageUrl;
     }

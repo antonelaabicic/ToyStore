@@ -83,7 +83,6 @@ public class AdminDashboardController {
                 && (form.getDescription() == null || form.getDescription().isBlank())
                 && form.getMinPrice() == null
                 && form.getMaxPrice() == null
-                && form.getInStock() == null
                 && (form.getCategoryString() == null || form.getCategoryString().isBlank());
 
         if (!isEmpty && form.getCategoryString() != null && !form.getCategoryString().isBlank()) {

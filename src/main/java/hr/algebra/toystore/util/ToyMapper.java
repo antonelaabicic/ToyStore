@@ -15,7 +15,6 @@ public class ToyMapper {
             toy.getName(),
             toy.getDescription(),
             toy.getPrice(),
-            toy.getStock(),
                 StringFormatter.formatToDisplay(toy.getCategory().getName()),
             toy.getImageUrl()
         );
@@ -27,7 +26,6 @@ public class ToyMapper {
                 dto.getName(),
                 dto.getDescription(),
                 dto.getPrice(),
-                dto.getStock(),
                 category,
                 dto.getImageUrl()
         );

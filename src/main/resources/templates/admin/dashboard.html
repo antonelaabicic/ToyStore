@@ -98,9 +98,8 @@
                     <ul class="list-unstyled">
                         <li><strong>Category:</strong> <span th:text="${toy.categoryString}">Category</span></li>
                         <li><strong>Price:</strong> $<span th:text="${toy.price}">0.00</span></li>
-                        <li><strong>Stock:</strong> <span th:text="${toy.stock}">0</span></li>
                         <li class="mt-2">
-                            <p class="text-muted mb-0" th:text="${toy.description}">Description here...</p>
+                            <p class="text-muted mb-0" th:text="${toy.description}"></p>
                         </li>
                     </ul>
                 </div>
@@ -161,11 +160,7 @@
                     <label for="toyDescription" class="form-label">Description</label>
                     <input type="text" class="form-control" id="toyDescription" th:field="*{description}" />
                 </div>
-                <div class="col-md-6">
-                    <label for="toyStock" class="form-label">Stock</label>
-                    <input type="number" class="form-control" id="toyStock" th:field="*{stock}" />
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="toyImage" class="form-label">Upload Image</label>
                     <input type="file" class="form-control" id="toyImage" name="image" />
                 </div>
@@ -220,7 +215,6 @@
                         <p><strong>Name:</strong> <span th:text="${toy.name}"></span></p>
                         <p><strong>Description:</strong> <span th:text="${toy.description}"></span></p>
                         <p><strong>Price:</strong> $<span th:text="${toy.price}"></span></p>
-                        <p><strong>Stock:</strong> <span th:text="${toy.stock}"></span></p>
                         <p><strong>Category:</strong> <span th:text="${toy.categoryString}"></span></p>
                         <p th:text="${toy.description}"></p>
                     </div>
@@ -291,13 +285,6 @@
                         <input type="text" class="form-control"
                                th:id="'editToyDescription__' + ${toy.id}"
                                name="description" th:value="${toy.description}" />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label th:attr="for='editToyStock__' + ${toy.id}" class="form-label">Stock</label>
-                        <input type="number" class="form-control"
-                               th:id="'editToyStock__' + ${toy.id}"
-                               name="stock" th:value="${toy.stock}" />
                     </div>
 
                     <div class="col-md-6">

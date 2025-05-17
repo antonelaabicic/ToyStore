@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                         <ul class="list-unstyled">
                                             <li><strong>Category:</strong> ${toy.categoryString}</li>
                                             <li><strong>Price:</strong> $${toy.price}</li>
-                                            <li><strong>Stock:</strong> ${toy.stock}</li>
                                             <li class="mt-2">
                                                 <p class="text-muted mb-0">${toy.description}</p>
                                             </li>

@@ -6,7 +6,6 @@ import hr.algebra.toystore.model.ToyCategory;
 import hr.algebra.toystore.repository.ToyCategoryRepository;
 import hr.algebra.toystore.repository.ToyRepository;
 import hr.algebra.toystore.util.ToyCategoryMapper;
-import hr.algebra.toystore.util.ToyMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

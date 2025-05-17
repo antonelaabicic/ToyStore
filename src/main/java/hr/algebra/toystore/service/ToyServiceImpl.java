@@ -66,7 +66,6 @@ public class ToyServiceImpl implements ToyService {
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
-                .stock(dto.getStock())
                 .category(category)
                 .imageUrl(dto.getImageUrl())
                 .build();
@@ -88,7 +87,6 @@ public class ToyServiceImpl implements ToyService {
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
-                .stock(dto.getStock())
                 .category(findCategoryByName(dto.getCategoryString()))
                 .imageUrl(imageUrl)
                 .build();
@@ -109,8 +107,6 @@ public class ToyServiceImpl implements ToyService {
                         || (toy.getPrice() != null && toy.getPrice().compareTo(form.getMinPrice()) >= 0))
                 .filter(toy -> form.getMaxPrice() == null
                         || (toy.getPrice() != null && toy.getPrice().compareTo(form.getMaxPrice()) <= 0))
-                .filter(toy -> form.getInStock() == null
-                        || (!form.getInStock() || (toy.getStock() != null && toy.getStock() > 0)))
                 .filter(toy -> form.getCategoryString() == null || form.getCategoryString().isBlank()
                         || (toy.getCategory() != null && form.getCategoryString().equalsIgnoreCase(toy.getCategory().getName())))
                 .filter(toy -> form.getCategoryId() == null
