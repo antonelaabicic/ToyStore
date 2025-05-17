@@ -16,4 +16,5 @@ public class ToySearchForm {
     private BigDecimal maxPrice;
     private Boolean inStock;
     private String categoryString;
+    private Integer categoryId;
 }

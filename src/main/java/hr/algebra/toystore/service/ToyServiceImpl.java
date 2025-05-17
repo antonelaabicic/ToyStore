@@ -113,6 +113,8 @@ public class ToyServiceImpl implements ToyService {
                         || (!form.getInStock() || (toy.getStock() != null && toy.getStock() > 0)))
                 .filter(toy -> form.getCategoryString() == null || form.getCategoryString().isBlank()
                         || (toy.getCategory() != null && form.getCategoryString().equalsIgnoreCase(toy.getCategory().getName())))
+                .filter(toy -> form.getCategoryId() == null
+                        || (toy.getCategory() != null && form.getCategoryId().equals(toy.getCategory().getId())))
                 .toList();
 
         return filteredToys.stream()
