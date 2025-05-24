@@ -8,10 +8,10 @@ public class ToyCategoryMapper {
         throw new UnsupportedOperationException("ToyCategoryMapper is a utility class.");
     }
 
-    public static ToyCategoryDto toDto(ToyCategory toyCategory) {
+    public static ToyCategoryDto toDto(ToyCategory entity) {
         return new ToyCategoryDto(
-            toyCategory.getId(),
-            StringFormatter.formatToDisplay(toyCategory.getName())
+            entity.getId(),
+            StringFormatter.formatToDisplay(entity.getName())
         );
     }
 

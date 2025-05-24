@@ -29,4 +29,8 @@ public class CartItem {
         this.toy = toy;
         this.quantity = quantity;
     }
+
+    public java.math.BigDecimal getTotalPriceOfItem() {
+        return toy.getPrice().multiply(java.math.BigDecimal.valueOf(quantity));
+    }
 }

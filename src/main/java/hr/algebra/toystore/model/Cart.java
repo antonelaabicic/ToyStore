@@ -3,11 +3,12 @@ package hr.algebra.toystore.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -26,5 +27,11 @@ public class Cart {
 
     public Cart(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return items.stream()
+                .map(CartItem::getTotalPriceOfItem)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
