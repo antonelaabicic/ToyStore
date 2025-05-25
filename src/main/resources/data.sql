@@ -67,11 +67,9 @@ VALUES
 
 INSERT INTO USERS(username, password, name, surname, email, country, city, address)
 VALUES
-    ('pperic', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'Pero', 'Peric', 'pero.peric@gmail.com', 'Hrvatska', 'Zagreb', 'Ulica Potočnica 7'),
-    ('aanic', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'Ana', 'Anic', 'ana.anic@gmail.com', 'Hrvatska', 'Pirovac', 'Primorska 21'),
-    ('iivic', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'Iva', 'Ivic', 'iva.ivic@gmail.com', 'Hrvatska', 'Zagreb', 'Ulica Jakova Gotovca 1'),
-    ('nnikic', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'Nika', 'Nikic', 'nika.nikic@gmail.com', 'Hrvatska', 'Zagreb', 'Mirna Ulica 36'),
-    ('hhanic', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'Hana', 'Hanic', 'hana.hanic@gmail.com', 'Hrvatska', 'Zagreb', 'Čulinečka 3');
+    ('pperic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Pero', 'Peric', 'pero.peric@gmail.com', 'Hrvatska', 'Zagreb', 'Ulica Potočnica 7'),
+    ('aanic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Ana', 'Anic', 'ana.anic@gmail.com', 'Hrvatska', 'Pirovac', 'Primorska 21'),
+    ('hhanic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Hana', 'Hanic', 'hana.hanic@gmail.com', 'Hrvatska', 'Zagreb', 'Čulinečka 3');
 
 INSERT INTO ROLE(name)
 VALUES
@@ -80,10 +78,7 @@ VALUES
 
 INSERT INTO USER_ROLE(user_id, role_id)
 VALUES
-    (1, 1),
     (1, 2),
     (2, 1),
-    (3, 1),
-    (4, 1),
-    (5, 1);
+    (3, 1);
 
