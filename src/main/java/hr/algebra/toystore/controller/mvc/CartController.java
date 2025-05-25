@@ -1,6 +1,7 @@
 package hr.algebra.toystore.controller.mvc;
 
 import hr.algebra.toystore.dto.CartDto;
+import hr.algebra.toystore.dto.CartItemDto;
 import hr.algebra.toystore.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +69,10 @@ public class CartController {
     @ResponseBody
     public int getCartItemCount(HttpServletRequest request) {
         String sessionId = request.getSession().getId();
-        return cartService.getCart(sessionId).getItems().size();
+        return cartService.getCart(sessionId)
+                .getItems()
+                .stream()
+                .mapToInt(CartItemDto::getQuantity)
+                .sum();
     }
 }
