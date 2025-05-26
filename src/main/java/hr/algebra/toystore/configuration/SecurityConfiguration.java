@@ -18,7 +18,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/toystore/**", "/store/**", "/cart/**", "/images/**",
-                                "/css/**", "/js/**", "/user/login", "/user/register"
+                                "/css/**", "/js/**", "/user/**"
                         ).permitAll()
 
 //                        .requestMatchers("/checkout/**").hasRole("USER")
@@ -48,13 +48,12 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    public static void main(String[] args) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        System.out.println(encoder.encode("123"));
-
-        boolean matches = encoder.matches("123", "$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C");
-        System.out.println("Match? " + matches);
-    }
-
+//    public static void main(String[] args) {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//
+//        System.out.println(encoder.encode("123"));
+//
+//        boolean matches = encoder.matches("123", "$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C");
+//        System.out.println("Match? " + matches);
+//    }
 }

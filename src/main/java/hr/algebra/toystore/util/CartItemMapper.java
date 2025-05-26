@@ -1,12 +1,8 @@
 package hr.algebra.toystore.util;
 
-
-import hr.algebra.toystore.dto.CartDto;
 import hr.algebra.toystore.dto.CartItemDto;
 import hr.algebra.toystore.model.CartItem;
 import hr.algebra.toystore.model.Toy;
-
-import java.util.List;
 
 public class CartItemMapper {
     private CartItemMapper() {

@@ -3,6 +3,8 @@ package hr.algebra.toystore.controller.mvc;
 import hr.algebra.toystore.dto.ToyCategoryDto;
 import hr.algebra.toystore.dto.ToyDto;
 import hr.algebra.toystore.model.ToySearchForm;
+import hr.algebra.toystore.repository.LoginAuditRepository;
+import hr.algebra.toystore.service.LoginAuditService;
 import hr.algebra.toystore.service.ToyCategoryService;
 import hr.algebra.toystore.service.ToyService;
 import hr.algebra.toystore.util.StringFormatter;
@@ -22,6 +24,7 @@ public class AdminDashboardController {
 
     private final ToyService toyService;
     private final ToyCategoryService toyCategoryService;
+    private final LoginAuditService auditRepository;
 
     private static final String REDIRECT_DASHBOARD = "redirect:/admin/dashboard";
 
@@ -93,5 +96,11 @@ public class AdminDashboardController {
             return toyService.findAll();
         }
         return toyService.findByCriteria(form);
+    }
+
+    @GetMapping("/logins")
+    public String viewLogins(Model model) {
+        model.addAttribute("logins", auditRepository.findAll());
+        return "admin/login_audit";
     }
 }
