@@ -21,24 +21,20 @@ public class SecurityConfiguration {
                                 "/css/**", "/js/**", "/user/**"
                         ).permitAll()
 
-//                        .requestMatchers("/checkout/**").hasRole("USER")
+                        .requestMatchers("/orders/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/user/login")
-                        .defaultSuccessUrl("/store/toys", true)
+                        .defaultSuccessUrl("/orders/checkout", true)
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/toystore/")
-//                        .invalidateHttpSession(true)
-//                        .deleteCookies("JSESSIONID")
-//                        .permitAll()
-//                )
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session
+                        .sessionFixation().none()
+                );
 
         return http.build();
     }

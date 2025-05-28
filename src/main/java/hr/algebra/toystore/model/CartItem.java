@@ -16,9 +16,11 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "toy_id")
     private Toy toy;
 

@@ -20,12 +20,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
-
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
@@ -37,5 +34,4 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private ApplicationUser user;
-
 }

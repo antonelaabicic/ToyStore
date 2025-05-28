@@ -32,7 +32,6 @@ public class CartMapper {
 
     public static Cart toEntity(CartDto dto, Map<Integer, Toy> toyMap) {
         Cart cart = Cart.builder()
-            .id(dto.getId())
             .sessionId(dto.getSessionId())
             .build();
 

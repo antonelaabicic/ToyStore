@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Checkout</h2>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-dark">
+            <h5 class="mb-0 text-white">Shipping Information</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> <span th:text="${user.name} + ' ' + ${user.surname}"></span></p>
+            <p><strong>Address:</strong> <span th:text="${user.address} + ', ' + ${user.city} + ', ' + ${user.country}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-dark">
+            <h5 class="mb-0 text-white">Order Summary</h5>
+        </div>
+        <div class="card-body">
+            <table class="table mb-3">
+                <thead>
+                <tr>
+                    <th>Toy</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${cart.items}">
+                    <td th:text="${item.toyName}"></td>
+                    <td th:text="${item.toyPrice} + ' €'"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.totalPrice} + ' €'"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-end fs-5 fw-bold">
+                Total: <span th:text="${cart.totalPrice} + ' €'"></span>
+            </div>
+        </div>
+    </div>
+
+    <form th:action="@{/orders/checkout}" method="post">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label for="paymentMethodId" class="form-label h5">Choose payment option:</label>
+                <select class="form-select" name="paymentMethodId" id="paymentMethodId" required>
+                    <option th:each="pm : ${paymentMethods}" th:value="${pm.id}" th:text="${pm.name}">Method</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <label class="form-label d-none d-md-block">&nbsp;</label>
+                <button class="btn btn-success">Place Order</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/badge.js"></script>
+
+</body>
+</html>

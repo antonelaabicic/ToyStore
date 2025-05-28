@@ -67,7 +67,7 @@ VALUES
 
 INSERT INTO USERS(username, password, name, surname, email, country, city, address)
 VALUES
-    ('pperic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Pero', 'Peric', 'pero.peric@gmail.com', 'Hrvatska', 'Zagreb', 'Ulica Potočnica 7'),
+    ('pperic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Pero', 'Peric', 'pero.peric.admin@gmail.com', 'Hrvatska', 'Zagreb', 'Ulica Potočnica 7'),
     ('aanic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Ana', 'Anic', 'ana.anic@gmail.com', 'Hrvatska', 'Pirovac', 'Primorska 21'),
     ('hhanic', '$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C', 'Hana', 'Hanic', 'hana.hanic@gmail.com', 'Hrvatska', 'Zagreb', 'Čulinečka 3');
 
@@ -81,4 +81,13 @@ VALUES
     (1, 2),
     (2, 1),
     (3, 1);
+
+
+INSERT INTO CART (id, session_id) VALUES (1001, 'test-session-abc');
+INSERT INTO CART_ITEM (id, cart_id, toy_id, quantity) VALUES (5001, 1001, 1, 2);
+INSERT INTO ORDERS (cart_id, order_date, payment_method_id, user_id)
+VALUES (1001, '2024-04-27 10:00:00', 1, 3);
+
+
+
 

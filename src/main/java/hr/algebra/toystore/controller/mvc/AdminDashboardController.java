@@ -3,7 +3,6 @@ package hr.algebra.toystore.controller.mvc;
 import hr.algebra.toystore.dto.ToyCategoryDto;
 import hr.algebra.toystore.dto.ToyDto;
 import hr.algebra.toystore.model.ToySearchForm;
-import hr.algebra.toystore.repository.LoginAuditRepository;
 import hr.algebra.toystore.service.LoginAuditService;
 import hr.algebra.toystore.service.ToyCategoryService;
 import hr.algebra.toystore.service.ToyService;

@@ -3,7 +3,9 @@ package hr.algebra.toystore.controller.mvc;
 import hr.algebra.toystore.dto.CartDto;
 import hr.algebra.toystore.dto.CartItemDto;
 import hr.algebra.toystore.service.CartService;
+import hr.algebra.toystore.service.UserSessionService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +14,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/cart")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CartController {
 
     private final CartService cartService;
+    private final UserSessionService userSessionService;
+
+    private String getSessionId() {
+        return userSessionService.getCurrentSessionId();
+    }
 
     @GetMapping
-    public String viewCart(HttpServletRequest request, Model model) {
-        String sessionId = request.getSession().getId();
-        CartDto cart = cartService.getCart(sessionId);
+    public String viewCart(Model model) {
+        CartDto cart = cartService.getCart(getSessionId());
         model.addAttribute("cart", cart);
         return "cart/view";
     }
@@ -29,47 +35,39 @@ public class CartController {
     public String addItem(@RequestParam("toyId") Integer toyId,
                           @RequestParam("quantity") Integer quantity,
                           @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                          HttpServletRequest request,
                           RedirectAttributes redirectAttributes) {
-        String sessionId = request.getSession().getId();
-        cartService.addItem(sessionId, toyId, quantity);
 
+        cartService.addItem(getSessionId(), toyId, quantity);
         redirectAttributes.addFlashAttribute("toastMessage", "Added to cart!");
-
         return "redirect:/store/toys" + (categoryId != null ? "?categoryId=" + categoryId : "");
     }
 
 
     @PostMapping("/update")
-    public String updateQuantity(@RequestParam("itemId") Integer itemId, @RequestParam("quantity") Integer quantity,
-                                 HttpServletRequest request)
+    public String updateQuantity(@RequestParam("itemId") Integer itemId, @RequestParam("quantity") Integer quantity)
     {
-        String sessionId = request.getSession().getId();
-        cartService.updateItemQuantity(sessionId, itemId, quantity);
+        cartService.updateItemQuantity(getSessionId(), itemId, quantity);
         return "redirect:/cart";
     }
 
     @PostMapping("/remove")
-    public String removeItem(@RequestParam("itemId") Integer itemId, HttpServletRequest request)
+    public String removeItem(@RequestParam("itemId") Integer itemId)
     {
-        String sessionId = request.getSession().getId();
-        cartService.removeItem(sessionId, itemId);
+        cartService.removeItem(getSessionId(), itemId);
         return "redirect:/cart";
     }
 
     @PostMapping("/clear")
-    public String clearCart(HttpServletRequest request)
+    public String clearCart()
     {
-        String sessionId = request.getSession().getId();
-        cartService.clearCart(sessionId);
+        cartService.clearCart(getSessionId());
         return "redirect:/cart";
     }
 
     @GetMapping("/count")
     @ResponseBody
-    public int getCartItemCount(HttpServletRequest request) {
-        String sessionId = request.getSession().getId();
-        return cartService.getCart(sessionId)
+    public int getCartItemCount() {
+        return cartService.getCart(getSessionId())
                 .getItems()
                 .stream()
                 .mapToInt(CartItemDto::getQuantity)

@@ -26,6 +26,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Cart findBySessionId(String sessionId) {
+        return cartRepository.findBySessionId(sessionId).orElseGet(() -> cartRepository.save(new Cart(sessionId)));
+    }
+
+    @Override
     public void addItem(String sessionId, Integer toyId, int quantity) {
         Cart cart = cartRepository.findBySessionId(sessionId).orElseGet(() -> cartRepository.save(new Cart(sessionId)));
 

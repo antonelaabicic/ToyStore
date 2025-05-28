@@ -43,9 +43,4 @@ public class AccountController {
             return "redirect:/user/register";
         }
     }
-
-    @GetMapping("/profile")
-    public String profile() {
-        return "user/profile";
-    }
 }

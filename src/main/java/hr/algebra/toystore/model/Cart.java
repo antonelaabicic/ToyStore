@@ -22,7 +22,9 @@ public class Cart {
     @Column(name = "session_id", unique = true)
     private String sessionId;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<CartItem> items = new ArrayList<>();
 
     public Cart(String sessionId) {

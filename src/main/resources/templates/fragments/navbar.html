@@ -54,12 +54,14 @@
                         <li sec:authorize="isAnonymous()">
                             <a class="dropdown-item" th:href="@{/user/login}">Login</a>
                         </li>
-
                         <li sec:authorize="isAuthenticated()">
-                            <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
+                            <a class="dropdown-item" th:href="@{/orders/my}">My Orders</a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')">
                             <a class="dropdown-item" th:href="@{/admin/logins}">Login History</a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="dropdown-item" th:href="@{/orders/all}">All Orders</a>
                         </li>
                         <li sec:authorize="isAuthenticated()">
                             <form th:action="@{/logout}" method="post" class="d-inline">
