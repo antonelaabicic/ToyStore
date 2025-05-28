@@ -72,8 +72,6 @@ public class OrderServiceImpl implements OrderService {
                 .map(order -> OrderMapper.toDto(order))
                 .collect(Collectors.toList());
 
-        orderDtos.forEach(order -> System.out.println(order));
-
         return orderDtos;
     }
 

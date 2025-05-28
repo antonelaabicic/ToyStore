@@ -11,8 +11,7 @@ public class OrderMapper {
     }
 
     public static OrderDto toDto(Order entity) {
-
-        OrderDto orderDto = new OrderDto(
+        return new OrderDto(
                 entity.getId(),
                 entity.getOrderDate(),
                 PaymentMethodMapper.toDto(entity.getPaymentMethod()),
@@ -27,7 +26,5 @@ public class OrderMapper {
                         entity.getUser().getAddress()
                 )
         );
-        System.out.println(entity.getCart());
-        return orderDto;
     }
 }
