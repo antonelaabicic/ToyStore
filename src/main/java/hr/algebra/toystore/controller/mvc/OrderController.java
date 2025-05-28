@@ -1,5 +1,9 @@
 package hr.algebra.toystore.controller.mvc;
 
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
+import hr.algebra.toystore.dto.CartDto;
 import hr.algebra.toystore.dto.PaymentMethodDto;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.OrderSearchForm;
@@ -21,6 +25,7 @@ public class OrderController {
     private final PaymentMethodService paymentMethodService;
     private final ApplicationUserService applicationUserService;
     private final UserSessionService userSessionService;
+    private final PayPalService payPalService;
 
     private String getSessionId() {
         return userSessionService.getCurrentSessionId();
@@ -72,5 +77,70 @@ public class OrderController {
 
         model.addAttribute("orders", orderService.searchOrders(searchForm));
         return "order/all_orders";
+    }
+
+    @GetMapping("/paypal/pay")
+    public String redirectToPayPal() {
+        CartDto cart = orderService.getCartForCheckout(getSessionId());
+        double total = cart.getTotalPrice().doubleValue();
+
+        try {
+            Payment payment = payPalService.createPayment(
+                    total,
+                    "EUR",
+                    "paypal",
+                    "sale",
+                    "Toy Store Order",
+                    "http://localhost:8080/orders/paypal/cancel",
+                    "http://localhost:8080/orders/paypal/success"
+            );
+
+            for (Links link : payment.getLinks()) {
+                if ("approval_url".equals(link.getRel())) {
+                    return "redirect:" + link.getHref();
+                }
+            }
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/orders/checkout?error";
+    }
+
+    @GetMapping("/paypal/success")
+    public String handlePayPalSuccess(@RequestParam("paymentId") String paymentId,
+                                      @RequestParam("PayerID") String payerId,
+                                      Principal principal) {
+
+        try {
+            Payment payment = payPalService.executePayment(paymentId, payerId);
+
+            if ("approved".equals(payment.getState())) {
+                UserDto user = applicationUserService.findByUsername(principal.getName());
+                PaymentMethodDto paypalMethod = paymentMethodService.findByName("PAYPAL");
+
+                orderService.placeOrder(getSessionId(), paypalMethod, user);
+                return "redirect:/orders/success";
+            }
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/orders/error";
+    }
+
+    @GetMapping("/paypal/cancel")
+    public String handlePayPalCancel() {
+        return "order/paypal_cancel";
+    }
+
+    @GetMapping("/success")
+    public String showOrderSuccessPage() {
+        return "order/paypal_success";
+    }
+
+    @GetMapping("/error")
+    public String showOrderErrorPage() {
+        return "order/paypal_error";
     }
 }

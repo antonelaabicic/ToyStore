@@ -78,7 +78,7 @@
                                     <h5 class="card-title text-center" th:text="${toy.name}">Toy Name</h5>
                                     <ul class="list-unstyled">
                                         <li><strong>Category:</strong> <span th:text="${toy.categoryString}">Category</span></li>
-                                        <li><strong>Price:</strong> $<span th:text="${toy.price}">0.00</span></li>
+                                        <li><strong>Price:</strong> <span th:text="${toy.price}">0.00</span>EUR</li>
                                         <li class="mt-2">
                                             <p class="text-muted mb-0" th:text="${toy.description}">Description</p>
                                         </li>
@@ -101,7 +101,7 @@
                                         <div>
                                             <p><strong>Name:</strong> <span th:text="${toy.name}"></span></p>
                                             <p><strong>Description:</strong> <span th:text="${toy.description}"></span></p>
-                                            <p><strong>Price:</strong> $<span th:text="${toy.price}"></span></p>
+                                            <p><strong>Price:</strong> <span th:text="${toy.price}"></span>EUR</p>
                                             <p><strong>Category:</strong> <span th:text="${toy.categoryString}"></span></p>
                                         </div>
                                     </div>

@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                         <h5 class="card-title text-center">${toy.name}</h5>
                                         <ul class="list-unstyled">
                                             <li><strong>Category:</strong> ${toy.categoryString}</li>
-                                            <li><strong>Price:</strong> $${toy.price}</li>
+                                            <li><strong>Price:</strong> ${toy.price} EUR</li>
                                             <li class="mt-2">
                                                 <p class="text-muted mb-0">${toy.description}</p>
                                             </li>

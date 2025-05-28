@@ -26,6 +26,7 @@
         </div>
         <div class="col-auto ms-auto">
             <button type="submit" class="btn btn-primary">Search</button>
+            <a href="/orders/all" class="btn btn-outline-secondary">Clear Filters</a>
         </div>
     </form>
 
@@ -59,7 +60,7 @@
             </table>
 
             <div class="text-end fw-bold">
-                Order Total: <span th:text="${order.cart.totalPrice} + ' $'"></span>
+                Order Total: <span th:text="${order.cart.totalPrice} + ' EUR'"></span>
             </div>
             <hr/>
         </div>

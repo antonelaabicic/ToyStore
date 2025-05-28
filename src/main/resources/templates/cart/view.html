@@ -27,7 +27,7 @@
             <tbody>
             <tr th:each="item : ${cart.items}">
                 <td th:text="${item.toyName}">Toy Name</td>
-                <td>$<span th:text="${item.toyPrice}">0.00</span></td>
+                <td><span th:text="${item.toyPrice}">0.00</span>EUR</td>
                 <td>
                     <form method="post" th:action="@{/cart/update}">
                         <input type="hidden" name="itemId" th:value="${item.id}" />
@@ -35,7 +35,7 @@
                         <button type="submit" class="btn btn-sm btn-secondary">Update</button>
                     </form>
                 </td>
-                <td>$<span th:text="${item.totalPrice}">0.00</span></td>
+                <td><span th:text="${item.totalPrice}">0.00</span>EUR</td>
                 <td>
                     <form method="post" th:action="@{/cart/remove}">
                         <input type="hidden" name="itemId" th:value="${item.id}" />
@@ -47,7 +47,7 @@
         </table>
 
         <div class="text-end">
-            <h4>Total: $<span th:text="${cart.totalPrice}">0.00</span></h4>
+            <h4>Total: <span th:text="${cart.totalPrice}">0.00</span>EUR</h4>
         </div>
 
         <div class="d-flex justify-content-center gap-2 mt-5">
