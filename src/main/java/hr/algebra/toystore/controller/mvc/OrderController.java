@@ -8,6 +8,7 @@ import hr.algebra.toystore.dto.PaymentMethodDto;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.OrderSearchForm;
 import hr.algebra.toystore.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,9 +81,12 @@ public class OrderController {
     }
 
     @GetMapping("/paypal/pay")
-    public String redirectToPayPal() {
+    public String redirectToPayPal(HttpServletRequest request) {
         CartDto cart = orderService.getCartForCheckout(getSessionId());
         double total = cart.getTotalPrice().doubleValue();
+
+        String baseUrl = request.getScheme() + "://" + request.getServerName() +
+                (request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : ":" + request.getServerPort());
 
         try {
             Payment payment = payPalService.createPayment(
@@ -91,8 +95,8 @@ public class OrderController {
                     "paypal",
                     "sale",
                     "Toy Store Order",
-                    "http://localhost:8080/orders/paypal/cancel",
-                    "http://localhost:8080/orders/paypal/success"
+                    baseUrl + "/orders/paypal/cancel",
+                    baseUrl + "/orders/paypal/success"
             );
 
             for (Links link : payment.getLinks()) {

@@ -57,11 +57,23 @@ document.addEventListener("DOMContentLoaded", function() {
                                             </li>
                                         </ul>
                                     </div>
+                                    <div class="card-footer d-flex justify-content-end gap-2">
+                                        <button class="btn btn-sm btn-outline-light btn-info"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#toyDetailsModal__${toy.id}">Details</button>
+                                        <button class="btn btn-sm btn-outline-light btn-warning"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#toyEditModal__${toy.id}">Edit</button>
+                                        <button class="btn btn-sm btn-outline-light btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#toyDeleteModal__${toy.id}">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         `;
                         toysSection.insertAdjacentHTML('beforeend', toyCard);
                     });
+
                 }
             })
             .catch(error => {

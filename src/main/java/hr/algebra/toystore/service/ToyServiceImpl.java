@@ -26,7 +26,7 @@ public class ToyServiceImpl implements ToyService {
     private final ToyRepository toyRepository;
     private final ToyCategoryRepository toyCategoryRepository;
 
-    private static final String IMAGE_DIR = "src/main/resources/static/images";
+    private static final Path IMAGE_DIR = Paths.get(System.getProperty("user.home"), "Downloads", "toy-images");
 
     @Override
     public List<ToyDto> findAll() {
@@ -44,9 +44,7 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public void save(ToyDto dto, MultipartFile imageFile) {
         ToyCategory category = findCategoryByName(dto.getCategoryString());
-
         dto.setImageUrl(uploadImage(imageFile));
-
         toyRepository.save(ToyMapper.toEntity(dto, category));
     }
 
@@ -75,12 +73,15 @@ public class ToyServiceImpl implements ToyService {
 
     @Override
     public void updateWithImage(Integer id, ToyDto dto, MultipartFile imageFile) {
-        Toy existingToy = toyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Toy not found"));
+        Toy existingToy = toyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Toy not found."));
 
         String imageUrl = (dto.getImageUrl() == null || dto.getImageUrl().isBlank())
                 ? existingToy.getImageUrl()
                 : dto.getImageUrl();
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            imageUrl = uploadImage(imageFile);
+        }
 
         existingToy = Toy.builder()
                 .id(existingToy.getId())
@@ -132,19 +133,17 @@ public class ToyServiceImpl implements ToyService {
 
     private String uploadImage(MultipartFile imageFile) {
         if (imageFile == null || imageFile.isEmpty()) {
-            throw new IllegalArgumentException("Image file is empty");
+            throw new IllegalArgumentException("Image file is empty.");
         }
-
-        String fileName = UUID.randomUUID() + "-" + imageFile.getOriginalFilename();
-        Path imagePath = Paths.get(IMAGE_DIR, fileName);
 
         try {
-            Files.createDirectories(imagePath.getParent());
+            Files.createDirectories(IMAGE_DIR);
+            String fileName = UUID.randomUUID() + "-" + imageFile.getOriginalFilename();
+            Path imagePath = IMAGE_DIR.resolve(fileName);
             Files.copy(imageFile.getInputStream(), imagePath);
+            return "/toy-images/" + fileName;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to store file: " + fileName, e);
+            throw new RuntimeException("Failed to store file.", e);
         }
-
-        return "/images/" + fileName;
     }
 }

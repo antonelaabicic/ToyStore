@@ -4,11 +4,13 @@ package hr.algebra.toystore.filter;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
+@Order(2)
 @Slf4j
 public class RequestTimingFilter implements Filter {
 

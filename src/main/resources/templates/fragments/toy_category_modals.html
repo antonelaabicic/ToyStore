@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="modals">
+  <!-- add category modal -->
+  <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/admin/category}" method="post" th:object="${categoryForm}" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label for="categoryName" class="form-label">Category Name</label>
+          <input type="text" class="form-control" id="categoryName" th:field="*{name}" placeholder="Category Name"/>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Add Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- details category toy modal -->
+  <div th:each="cat : ${categories}">
+    <div class="modal fade" th:id="'categoryDetailsModal__' + ${cat.id}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content border-primary">
+          <div class="modal-header bg-primary">
+            <h5 class="modal-title text-white ">Category Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Name:</strong> <span th:text="${cat.name}"></span></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit toy category modal -->
+  <div th:each="cat : ${categories}">
+    <div class="modal fade" th:id="'categoryEditModal__' + ${cat.id}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <form th:action="@{/admin/category/edit}" method="post" class="modal-content">
+          <div class="modal-header bg-primary">
+            <h5 class="modal-title text-white">Edit Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id" th:value="${cat.id}" />
+
+            <div class="mb-3">
+              <label for="categoryNameEdit" class="form-label">Category Name</label>
+              <input type="text" class="form-control" name="name" th:value="${cat.name}" id="categoryNameEdit" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- delete toy category modal -->
+  <div th:each="cat : ${categories}">
+    <div class="modal fade" th:id="'categoryDeleteModal__' + ${cat.id}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content border-danger">
+          <div class="modal-header bg-danger">
+            <h5 class="modal-title text-white">Delete Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p>Are you sure you want to delete the category:</p>
+            <h5 class="text-danger" th:text="${cat.name}">Category Name</h5>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <form th:action="@{'/admin/category/delete/' + ${cat.id}}" method="post">
+              <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="modals">
+    <!-- add toy modal -->
+    <div class="modal fade" id="addToyModal" tabindex="-1" aria-labelledby="addToyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form th:action="@{/admin/toy}" method="post" th:object="${toyForm}" enctype="multipart/form-data" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addToyModalLabel">Add New Toy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body row g-3">
+                    <div class="col-md-6">
+                        <label for="toyName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="toyName" th:field="*{name}" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="toyPrice" class="form-label">Price</label>
+                        <input type="number" step="0.01" class="form-control" id="toyPrice" th:field="*{price}" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="toyDescription" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="toyDescription" th:field="*{description}" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="toyImage" class="form-label">Upload Image</label>
+                        <input type="file" class="form-control" id="toyImage" name="image" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="categorySelect" class="form-label">Category</label>
+                        <select class="form-select" id="categorySelect" th:field="*{categoryString}">
+                            <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Add Toy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- details toy modal -->
+    <div th:each="toy : ${toys}">
+        <div class="modal fade" th:id="'toyDetailsModal__' + ${toy.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content border-success">
+                    <div class="modal-header bg-success">
+                        <h5 class="modal-title text-white">Toy Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="mb-4">
+                            <img th:src="@{${toy.imageUrl}}" class="img-fluid rounded" style="max-height: 200px;" alt="Toy Image"/>
+                        </div>
+                        <div>
+                            <p><strong>Name:</strong> <span th:text="${toy.name}"></span></p>
+                            <p><strong>Description:</strong> <span th:text="${toy.description}"></span></p>
+                            <p><strong>Price:</strong> <span th:text="${toy.price}"></span> EUR</p>
+                            <p><strong>Category:</strong> <span th:text="${toy.categoryString}"></span></p>
+                            <p th:text="${toy.description}"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- edit toy modal -->
+    <div th:each="toy : ${toys}">
+        <div class="modal fade" th:id="'toyEditModal__' + ${toy.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form th:action="@{/admin/toy/edit}" method="post" enctype="multipart/form-data" class="modal-content">
+                    <div class="modal-header bg-success">
+                        <h5 class="modal-title text-white">Edit Toy</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+                    </div>
+                    <div class="modal-body row g-3">
+                        <input type="hidden" name="id" th:value="${toy.id}" />
+                        <input type="hidden" name="imageUrl" th:value="${toy.imageUrl}" />
+
+                        <div class="col-md-6">
+                            <label th:attr="for='editToyName__' + ${toy.id}" class="form-label">Name</label>
+                            <input type="text" class="form-control"
+                                   th:id="'editToyName__' + ${toy.id}"
+                                   name="name" th:value="${toy.name}" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label th:attr="for='editToyPrice__' + ${toy.id}" class="form-label">Price</label>
+                            <input type="number" step="0.01" class="form-control"
+                                   th:id="'editToyPrice__' + ${toy.id}"
+                                   name="price" th:value="${toy.price}" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <label th:attr="for='editToyDescription__' + ${toy.id}" class="form-label">Description</label>
+                            <input type="text" class="form-control"
+                                   th:id="'editToyDescription__' + ${toy.id}"
+                                   name="description" th:value="${toy.description}" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label th:attr="for='editToyImage__' + ${toy.id}" class="form-label">Change Image (Optional)</label>
+                            <input type="file" class="form-control"
+                                   th:id="'editToyImage__' + ${toy.id}"
+                                   name="image" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <label th:attr="for='editToyCategorySelect__' + ${toy.id}" class="form-label">Category</label>
+                            <select class="form-select"
+                                    th:id="'editToyCategorySelect__' + ${toy.id}"
+                                    name="categoryString">
+                                <option th:each="cat : ${categories}"
+                                        th:value="${cat.name}"
+                                        th:text="${cat.name}"
+                                        th:selected="${cat.name == toy.categoryString}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- delete toy modal -->
+    <div th:each="toy : ${toys}">
+        <div class="modal fade" th:id="'toyDeleteModal__' + ${toy.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border-danger">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white">Delete Toy</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Are you sure you want to delete the toy:</p>
+                        <h5 class="text-danger" th:text="${toy.name}">Toy Name</h5>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <form th:action="@{'/admin/toy/delete/' + ${toy.id}}" method="post">
+                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
