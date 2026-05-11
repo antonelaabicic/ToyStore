@@ -18,7 +18,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/toystore/**", "/store/**", "/cart/**", "/images/**",
-                                "/css/**", "/js/**", "/user/**"
+                                "/css/**", "/js/**", "/user/**", "/h2-console/**"
                         ).permitAll()
 
                         .requestMatchers("/orders/**").hasAnyRole("USER", "ADMIN")
@@ -32,6 +32,9 @@ public class SecurityConfiguration {
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers ->
+                        headers.frameOptions(frame -> frame.disable())
+                )
                 .sessionManagement(session -> session
                         .sessionFixation().none()
                 );
@@ -43,13 +46,4 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    public static void main(String[] args) {
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//
-//        System.out.println(encoder.encode("123"));
-//
-//        boolean matches = encoder.matches("123", "$2a$10$HDaMrzUr4V5I6GfwXa0kxuXW7sMUk8bF/HBmY3ygvSymqsJk8Cx7C");
-//        System.out.println("Match? " + matches);
-//    }
 }
