@@ -12,8 +12,7 @@ public interface ToyService {
     Optional<ToyDto> findById(Integer id);
     void save(ToyDto dto, MultipartFile imageFile);
     void deleteById(Integer id);
-    void update(Integer id, ToyDto dto);
-    void updateWithImage(Integer id, ToyDto dto, MultipartFile imageFile);
+    void update(Integer id, ToyDto dto, MultipartFile imageFile);
     List<ToyDto> findByCriteria(ToySearchForm toySearchForm);
     List<ToyDto> findByCategoryId(Integer categoryId);
 }

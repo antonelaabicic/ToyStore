@@ -1,3 +1,6 @@
+const cartCsrfToken = document.querySelector('meta[name="_csrf"]').content;
+const cartCsrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
 $(document).on('hidden.bs.modal', '.modal', function () {
     $(this).find('select[id^="quantitySelect__"]').val(1);
 });
@@ -9,7 +12,10 @@ $(document).on('click', '.btn-add-to-cart', function () {
 
     fetch('/cart/add', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            [cartCsrfHeader]: cartCsrfToken
+        },
         body: `toyId=${toyId}&quantity=${quantity}&categoryId=${categoryId}`
     }).then(res => {
         if (typeof updateCartCount === 'function') {

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="errorToast">
+
+    <div class="toast-container position-fixed top-0 end-0 p-3"
+         style="z-index: 1055;">
+
+        <div th:if="${error}"
+             id="errorToast"
+             class="toast align-items-center text-bg-danger border-0"
+             role="alert"
+             aria-live="assertive"
+             aria-atomic="true">
+
+            <div class="d-flex">
+                <div class="toast-body"
+                     th:text="${error}">
+                    Error message
+                </div>
+
+                <button type="button"
+                        class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast">
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

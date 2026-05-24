@@ -1,3 +1,6 @@
+const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("toySearchForm");
     const clearBtn = document.getElementById("clearSearchBtn");
@@ -24,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch('/admin/toy/search', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                [csrfHeader]: csrfToken
             },
             body: params
         })

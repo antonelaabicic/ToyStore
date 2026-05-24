@@ -29,7 +29,6 @@ public class ToyDto {
     @NotEmpty(message = "Category name is required.")
     private String categoryString;
 
-    @NotEmpty(message = "Image URL is required.")
     private String imageUrl;
 
     @Transient

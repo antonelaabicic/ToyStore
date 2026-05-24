@@ -44,7 +44,13 @@ public class ToyServiceImpl implements ToyService {
     @Override
     public void save(ToyDto dto, MultipartFile imageFile) {
         ToyCategory category = findCategoryByName(dto.getCategoryString());
-        dto.setImageUrl(uploadImage(imageFile));
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            dto.setImageUrl(uploadImage(imageFile));
+        } else {
+            dto.setImageUrl("/images/snake.png");
+        }
+
         toyRepository.save(ToyMapper.toEntity(dto, category));
     }
 
@@ -54,25 +60,7 @@ public class ToyServiceImpl implements ToyService {
     }
 
     @Override
-    public void update(Integer id, ToyDto dto) {
-        Toy existingToy = toyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Toy not found."));
-        ToyCategory category = findCategoryByName(dto.getCategoryString());
-
-        existingToy = Toy.builder()
-                .id(existingToy.getId())
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .price(dto.getPrice())
-                .category(category)
-                .imageUrl(dto.getImageUrl())
-                .build();
-
-        toyRepository.save(existingToy);
-    }
-
-    @Override
-    public void updateWithImage(Integer id, ToyDto dto, MultipartFile imageFile) {
+    public void update(Integer id, ToyDto dto, MultipartFile imageFile) {
         Toy existingToy = toyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Toy not found."));
 
         String imageUrl = (dto.getImageUrl() == null || dto.getImageUrl().isBlank())

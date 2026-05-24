@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -51,14 +52,22 @@ public class AdminDashboardController {
     }
 
     @PostMapping("/category/delete/{id}")
-    public String deleteCategory(@PathVariable Integer id) {
-        toyCategoryService.deleteById(id);
+    public String deleteCategory(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            toyCategoryService.deleteById(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Toy category can't be deleted.");
+        }
         return REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/delete/{id}")
-    public String deleteToy(@PathVariable Integer id) {
-        toyService.deleteById(id);
+    public String deleteToy(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            toyService.deleteById(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Toy can't be deleted.");
+        }
         return REDIRECT_DASHBOARD;
     }
 
@@ -69,12 +78,9 @@ public class AdminDashboardController {
     }
 
     @PostMapping("/toy/edit")
-    public String editToy(@ModelAttribute ToyDto toyForm, @RequestParam(value = "image", required = false) MultipartFile imageFile) {
-        if (imageFile != null && !imageFile.isEmpty()) {
-            toyService.updateWithImage(toyForm.getId(), toyForm, imageFile);
-        } else {
-            toyService.update(toyForm.getId(), toyForm);
-        }
+    public String editToy(@ModelAttribute ToyDto toyForm, @RequestParam(value = "image", required = false) MultipartFile imageFile
+    ) {
+        toyService.update(toyForm.getId(), toyForm, imageFile);
         return REDIRECT_DASHBOARD;
     }
 

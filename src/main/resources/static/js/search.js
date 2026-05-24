@@ -1,3 +1,6 @@
+const csrfToken = $('meta[name="_csrf"]').attr('content');
+const csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+
 function ajaxLoadToysByCategory(categoryId) {
     $('#ajaxCategoryId').val(categoryId);
 
@@ -25,6 +28,9 @@ function ajaxSearchToys(e) {
         url: '/store/toys/search',
         method: 'POST',
         data: formData,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
         success: function (html) {
             $('#ajaxCardsPlaceholder').html(html);
         },

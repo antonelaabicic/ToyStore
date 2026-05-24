@@ -65,7 +65,7 @@ public class OrderController {
         return new OrderSearchForm();
     }
 
-    @GetMapping("/all")
+    @PostMapping("/all")
     public String viewAllOrders(
             @ModelAttribute("searchForm") OrderSearchForm searchForm,
             Model model

@@ -2,9 +2,11 @@ package hr.algebra.toystore.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +20,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/toystore/**", "/store/**", "/cart/**", "/images/**",
-                                "/css/**", "/js/**", "/user/**", "/h2-console/**"
+                                "/css/**", "/js/**", "/user/**"
                         ).permitAll()
 
                         .requestMatchers("/orders/**").hasAnyRole("USER", "ADMIN")
@@ -31,12 +33,22 @@ public class SecurityConfiguration {
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)
-                .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers ->
-                        headers.frameOptions(frame -> frame.disable())
-                )
-                .sessionManagement(session -> session
-                        .sessionFixation().none()
+                        headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                                .contentSecurityPolicy(csp ->
+                                        csp.policyDirectives(
+                                                "default-src 'self'; " +
+                                                "script-src 'self'; " +
+                                                "style-src 'self' 'unsafe-inline'; " +
+                                                "img-src 'self' data: blob:; " +
+                                                "font-src 'self'; " +
+                                                "connect-src 'self'; " +
+                                                "form-action 'self'; " +
+                                                "object-src 'none'; " +
+                                                "base-uri 'self'; " +
+                                                "frame-ancestors 'self';"
+                                        )
+                                )
                 );
 
         return http.build();
