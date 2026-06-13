@@ -19,7 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @AllArgsConstructor
-@SessionAttributes({"toyForm", "categoryForm"})
 public class AdminDashboardController {
 
     private final ToyService toyService;
@@ -27,6 +26,7 @@ public class AdminDashboardController {
     private final LoginAuditService auditRepository;
 
     private static final String REDIRECT_DASHBOARD = "redirect:/admin/dashboard";
+    private static final String ERROR_ATTRIBUTE = "error";
 
     @GetMapping("/dashboard")
     public String showAdminDashboard(Model model) {
@@ -46,8 +46,14 @@ public class AdminDashboardController {
     }
 
     @PostMapping("/toy")
-    public String addToy(@ModelAttribute ToyDto toyForm, @RequestParam("image") MultipartFile file) {
-        toyService.save(toyForm, file);
+    public String addToy(@ModelAttribute ToyDto toyForm, @RequestParam("image") MultipartFile file,
+                         RedirectAttributes redirectAttributes) {
+        try {
+            toyService.save(toyForm, file);
+        }
+        catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, e.getMessage());
+        }
         return REDIRECT_DASHBOARD;
     }
 
@@ -56,7 +62,7 @@ public class AdminDashboardController {
         try {
             toyCategoryService.deleteById(id);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Toy category can't be deleted.");
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, "Toy category can't be deleted.");
         }
         return REDIRECT_DASHBOARD;
     }
@@ -66,7 +72,7 @@ public class AdminDashboardController {
         try {
             toyService.deleteById(id);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Toy can't be deleted.");
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, "Toy can't be deleted.");
         }
         return REDIRECT_DASHBOARD;
     }

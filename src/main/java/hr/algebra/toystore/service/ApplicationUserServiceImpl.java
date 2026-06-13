@@ -22,12 +22,12 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
 
     public void registerNewUser(UserRegisterDto dto) {
         if (userRepository.findByUsername(dto.getUsername()) != null) {
-            throw new RuntimeException("Username already exists");
+            throw new IllegalArgumentException("Username already exists");
         }
 
         ApplicationRole userRole = roleRepository.findByName("ROLE_USER");
         if (userRole == null) {
-            throw new RuntimeException("Default role not found");
+            throw new IllegalArgumentException("Default role not found.");
         }
 
         ApplicationUser user = ApplicationUser.builder()
@@ -48,7 +48,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public UserDto findByUsername(String username) {
         ApplicationUser user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new RuntimeException("User not found: " + username);
+            throw new IllegalArgumentException("User not found: " + username);
         }
         return UserMapper.toDto(user);
     }

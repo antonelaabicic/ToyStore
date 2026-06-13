@@ -6,6 +6,7 @@
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Navigation Fragment</title>
 </head>
 <body>
 
@@ -44,13 +45,13 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-1 cart-link"
-                       href="#" role="button" data-bs-toggle="dropdown">
+                    <button class="nav-link dropdown-toggle d-flex align-items-center gap-1 cart-link"
+                       type="button" data-bs-toggle="dropdown">
                         <svg color="#ffffff" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 24 24" fill="currentColor">
                             <path d="M9 7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7ZM12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2ZM5 20C5 17.7909 6.79086 16 9 16H15C17.2091 16 19 17.7909 19 20V21H21V20C21 16.6863 18.3137 14 15 14H9C5.68629 14 3 16.6863 3 20V21H5V20Z"/>
                         </svg>
-                    </a>
+                    </button>
 
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li sec:authorize="isAnonymous()">

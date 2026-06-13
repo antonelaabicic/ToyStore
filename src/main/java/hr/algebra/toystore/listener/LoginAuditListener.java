@@ -20,16 +20,19 @@ public class LoginAuditListener implements ApplicationListener<AuthenticationSuc
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         String username = event.getAuthentication().getName();
+        ServletRequestAttributes attributes =
+                (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes()).getRequest();
+        if (attributes == null) {
+            return;
+        }
 
-        String ipAddress = request.getRemoteAddr();
+        HttpServletRequest request = attributes.getRequest();
 
         LoginAudit log = LoginAudit.builder()
                 .username(username)
                 .timestamp(LocalDateTime.now())
-                .ipAddress(ipAddress)
+                .ipAddress(request.getRemoteAddr())
                 .build();
 
         auditRepository.save(log);

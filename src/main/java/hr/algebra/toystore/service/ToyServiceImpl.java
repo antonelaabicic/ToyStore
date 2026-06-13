@@ -116,7 +116,7 @@ public class ToyServiceImpl implements ToyService {
 
     private ToyCategory findCategoryByName(String categoryName) {
         return toyCategoryRepository.findByName(StringFormatter.formatToDb(categoryName))
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Category not found."));
     }
 
     private String uploadImage(MultipartFile imageFile) {
@@ -131,7 +131,7 @@ public class ToyServiceImpl implements ToyService {
             Files.copy(imageFile.getInputStream(), imagePath);
             return "/toy-images/" + fileName;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to store file.", e);
+            throw new IllegalStateException("Failed to store file.", e);
         }
     }
 }

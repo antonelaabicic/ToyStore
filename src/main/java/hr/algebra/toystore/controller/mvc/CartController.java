@@ -4,9 +4,7 @@ import hr.algebra.toystore.dto.CartDto;
 import hr.algebra.toystore.dto.CartItemDto;
 import hr.algebra.toystore.service.CartService;
 import hr.algebra.toystore.service.UserSessionService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +17,8 @@ public class CartController {
 
     private final CartService cartService;
     private final UserSessionService userSessionService;
+
+    private static final String REDIRECT_CART = "redirect:/cart";
 
     private String getSessionId() {
         return userSessionService.getCurrentSessionId();
@@ -47,21 +47,21 @@ public class CartController {
     public String updateQuantity(@RequestParam("itemId") Integer itemId, @RequestParam("quantity") Integer quantity)
     {
         cartService.updateItemQuantity(getSessionId(), itemId, quantity);
-        return "redirect:/cart";
+        return REDIRECT_CART;
     }
 
     @PostMapping("/remove")
     public String removeItem(@RequestParam("itemId") Integer itemId)
     {
         cartService.removeItem(getSessionId(), itemId);
-        return "redirect:/cart";
+        return REDIRECT_CART;
     }
 
     @PostMapping("/clear")
     public String clearCart()
     {
         cartService.clearCart(getSessionId());
-        return "redirect:/cart";
+        return REDIRECT_CART;
     }
 
     @GetMapping("/count")

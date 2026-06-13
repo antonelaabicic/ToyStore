@@ -5,20 +5,15 @@ import hr.algebra.toystore.dto.OrderDto;
 import hr.algebra.toystore.dto.PaymentMethodDto;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.*;
-import hr.algebra.toystore.repository.CartRepository;
 import hr.algebra.toystore.repository.OrderRepository;
-import hr.algebra.toystore.repository.ToyRepository;
-import hr.algebra.toystore.util.CartMapper;
 import hr.algebra.toystore.util.OrderMapper;
 import hr.algebra.toystore.util.PaymentMethodMapper;
-import hr.algebra.toystore.util.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -44,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
                     copy.setCart(copiedCart);
                     return copy;
                 })
-                .collect(Collectors.toList());
+                .toList();
 
         copiedCart.setItems(copiedItems);
 
@@ -66,18 +61,16 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getOrdersByUser(UserDto userDto) {
         ApplicationUser user = applicationUserService.findUserByUsername(userDto.getUsername());
 
-        List<OrderDto> orderDtos = orderRepository.findByUser(user).stream()
-                .map(order -> OrderMapper.toDto(order))
-                .collect(Collectors.toList());
-
-        return orderDtos;
+        return orderRepository.findByUser(user).stream()
+                .map(OrderMapper::toDto)
+                .toList();
     }
 
     @Override
     public List<OrderDto> getAllOrders() {
         return orderRepository.findAll().stream()
                 .map(OrderMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -108,6 +101,6 @@ public class OrderServiceImpl implements OrderService {
                     return matches;
                 })
                 .map(OrderMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

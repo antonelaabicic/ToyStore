@@ -10,6 +10,7 @@ import hr.algebra.toystore.model.OrderSearchForm;
 import hr.algebra.toystore.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/orders")
 @AllArgsConstructor
@@ -27,6 +29,8 @@ public class OrderController {
     private final ApplicationUserService applicationUserService;
     private final UserSessionService userSessionService;
     private final PayPalService payPalService;
+
+    private static final String ORDERS = "orders";
 
     private String getSessionId() {
         return userSessionService.getCurrentSessionId();
@@ -56,7 +60,7 @@ public class OrderController {
     @GetMapping("/my")
     public String viewUserOrders(Principal principal, Model model) {
         UserDto userDto = applicationUserService.findByUsername(principal.getName());
-        model.addAttribute("orders", orderService.getOrdersByUser(userDto));
+        model.addAttribute(ORDERS, orderService.getOrdersByUser(userDto));
         return "order/my_orders";
     }
 
@@ -72,11 +76,11 @@ public class OrderController {
     ) {
         if (!orderSearchFormValidator.isValid(searchForm)) {
             model.addAttribute("error", "Start date must be before end date.");
-            model.addAttribute("orders", List.of());
+            model.addAttribute(ORDERS, List.of());
             return "order/all_orders";
         }
 
-        model.addAttribute("orders", orderService.searchOrders(searchForm));
+        model.addAttribute(ORDERS, orderService.searchOrders(searchForm));
         return "order/all_orders";
     }
 
@@ -105,7 +109,7 @@ public class OrderController {
                 }
             }
         } catch (PayPalRESTException e) {
-            e.printStackTrace();
+            log.error("PayPal payment failed: {}", e.getMessage());
         }
 
         return "redirect:/orders/checkout?error";
@@ -127,7 +131,7 @@ public class OrderController {
                 return "redirect:/orders/success";
             }
         } catch (PayPalRESTException e) {
-            e.printStackTrace();
+            log.error("PayPal payment failed: {}", e.getMessage());
         }
 
         return "redirect:/orders/error";

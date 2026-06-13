@@ -50,19 +50,8 @@ public class ApplicationUser {
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<ApplicationRole> roles;
 
-    public ApplicationUser(String username, String password, String name, String surname, String email, String country, String city, String address, List<ApplicationRole> roles) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.country = country;
-        this.city = city;
-        this.address = address;
-        this.roles = roles;
-    }
-
     public boolean isAdmin() {
-        return this.roles.contains("ROLE_ADMIN");
+        return this.roles.stream()
+                .anyMatch(role -> "ROLE_ADMIN".equals(role.getName()));
     }
 }

@@ -8,7 +8,6 @@ import hr.algebra.toystore.model.Toy;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CartMapper {
 
@@ -20,7 +19,7 @@ public class CartMapper {
         List<CartItemDto> itemDtos = entity.getItems()
             .stream()
             .map(CartItemMapper::toDto)
-            .collect(Collectors.toList());
+            .toList();
 
         return new CartDto(
                 entity.getId(),
@@ -42,7 +41,7 @@ public class CartMapper {
                     cartItem.setCart(cart);
                     return cartItem;
                 })
-                .collect(Collectors.toList());
+                .toList();
 
         cart.setItems(items);
         return cart;

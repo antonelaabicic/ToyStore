@@ -20,12 +20,15 @@ public class ToyStoreController {
     private final ToyService toyService;
     private final ToyCategoryService toyCategoryService;
 
+    private static final String CATEGORIES = "categories";
+    private static final String SELECTED_CATEGORY_ID = "selectedCategoryId";
+
     @GetMapping("/toys")
     public String showCategorySelection(@RequestParam(value = "categoryId", required = false) Integer categoryId,
                                         Model model) {
         List<ToyCategoryDto> categories = toyCategoryService.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute(CATEGORIES, categories);
+        model.addAttribute(SELECTED_CATEGORY_ID, categoryId);
 
         List<ToyDto> toys = (categoryId != null) ? toyService.findByCategoryId(categoryId) : List.of();
         model.addAttribute("toys", toys);
@@ -39,8 +42,8 @@ public class ToyStoreController {
         List<ToyDto> toys = (categoryId != null) ? toyService.findByCategoryId(categoryId) : List.of();
         List<ToyCategoryDto> categories = toyCategoryService.findAll();
 
-        model.addAttribute("categories", categories);
-        model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute(CATEGORIES, categories);
+        model.addAttribute(SELECTED_CATEGORY_ID, categoryId);
         model.addAttribute("toys", toys);
 
         return "store/toys :: #ajaxCardsPlaceholder";
@@ -51,8 +54,8 @@ public class ToyStoreController {
         List<ToyDto> toys = toyService.findByCriteria(form);
 
         List<ToyCategoryDto> categories = toyCategoryService.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("selectedCategoryId", form.getCategoryId());
+        model.addAttribute(CATEGORIES, categories);
+        model.addAttribute(SELECTED_CATEGORY_ID, form.getCategoryId());
         model.addAttribute("toys", toys);
 
         return "store/toys :: #ajaxCardsPlaceholder";

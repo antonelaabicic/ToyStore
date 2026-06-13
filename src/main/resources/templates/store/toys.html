@@ -69,12 +69,12 @@
                 <div class="row g-4" th:if="${toys != null and !toys.isEmpty()}">
                     <div class="col-md-4" th:each="toy : ${toys}">
 
-                        <div class="text-decoration-none text-dark" role="button"
+                        <button class="text-decoration-none text-dark" type="button"
                              data-bs-toggle="modal"
                              th:attr="data-bs-target='#toyDetailsModal__' + ${toy.id}">
                             <div class="card border-success shadow-sm h-100 card-hover">
                                 <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px; overflow: hidden;">
-                                    <img th:src="@{${toy.imageUrl}}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="Toy image">
+                                    <img th:src="@{${toy.imageUrl}}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="Toy">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title text-center" th:text="${toy.name}">Toy Name</h5>
@@ -87,7 +87,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </button>
 
                         <div class="modal fade" th:id="'toyDetailsModal__' + ${toy.id}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="modal-body text-center">
                                         <div class="mb-4">
-                                            <img th:src="@{${toy.imageUrl}}" class="img-fluid rounded" style="max-height: 200px;" alt="Toy Image"/>
+                                            <img th:src="@{${toy.imageUrl}}" class="img-fluid rounded" style="max-height: 200px;" alt="Toy"/>
                                         </div>
                                         <div>
                                             <p><strong>Name:</strong> <span th:text="${toy.name}"></span></p>

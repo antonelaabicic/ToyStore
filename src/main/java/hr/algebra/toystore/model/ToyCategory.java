@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 @Entity
 @Table(name = "TOY_CATEGORY")
 @NoArgsConstructor

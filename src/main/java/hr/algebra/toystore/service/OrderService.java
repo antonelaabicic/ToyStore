@@ -5,7 +5,7 @@ import hr.algebra.toystore.dto.OrderDto;
 import hr.algebra.toystore.dto.PaymentMethodDto;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.OrderSearchForm;
-;
+
 import java.util.List;
 
 public interface OrderService {
