@@ -36,5 +36,6 @@ src/main/resources/application-secret.properties
 
 src/main/resources/templates/test-links.html
 src/main/java/hr/algebra/toystore/controller/mvc/TestLinksController.java
+src/main/java/hr/algebra/toystore/util/SecretGenerator.java
 
 

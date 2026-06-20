@@ -9,7 +9,7 @@ import hr.algebra.toystore.model.Toy;
 import java.util.List;
 import java.util.Map;
 
-public class CartMapper {
+public final class CartMapper {
 
     private CartMapper() {
         throw new UnsupportedOperationException("CartMapper is a utility class.");

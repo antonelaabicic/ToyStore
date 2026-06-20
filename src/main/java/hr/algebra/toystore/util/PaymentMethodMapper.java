@@ -3,7 +3,7 @@ package hr.algebra.toystore.util;
 import hr.algebra.toystore.dto.PaymentMethodDto;
 import hr.algebra.toystore.model.PaymentMethod;
 
-public class PaymentMethodMapper {
+public final class PaymentMethodMapper {
     private PaymentMethodMapper() {
         throw new UnsupportedOperationException("PaymentMethodMapper is a utility class.");
     }

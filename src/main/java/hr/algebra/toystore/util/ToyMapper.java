@@ -4,7 +4,7 @@ import hr.algebra.toystore.dto.ToyDto;
 import hr.algebra.toystore.model.Toy;
 import hr.algebra.toystore.model.ToyCategory;
 
-public class ToyMapper {
+public final class ToyMapper {
     private ToyMapper() {
         throw new UnsupportedOperationException("ToyMapper is a utility class.");
     }

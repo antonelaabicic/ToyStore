@@ -6,7 +6,9 @@ import hr.algebra.toystore.model.ToySearchForm;
 import hr.algebra.toystore.service.LoginAuditService;
 import hr.algebra.toystore.service.ToyCategoryService;
 import hr.algebra.toystore.service.ToyService;
+import hr.algebra.toystore.util.Constants;
 import hr.algebra.toystore.util.StringFormatter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +27,6 @@ public class AdminDashboardController {
     private final ToyCategoryService toyCategoryService;
     private final LoginAuditService auditRepository;
 
-    private static final String REDIRECT_DASHBOARD = "redirect:/admin/dashboard";
-    private static final String ERROR_ATTRIBUTE = "error";
-
     @GetMapping("/dashboard")
     public String showAdminDashboard(Model model) {
         model.addAttribute("toys", toyService.findAll());
@@ -42,7 +41,7 @@ public class AdminDashboardController {
     @PostMapping("/category")
     public String addCategory(@ModelAttribute ToyCategoryDto categoryForm) {
         toyCategoryService.save(categoryForm);
-        return REDIRECT_DASHBOARD;
+        return Constants.REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy")
@@ -52,9 +51,9 @@ public class AdminDashboardController {
             toyService.save(toyForm, file);
         }
         catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, e.getMessage());
+            redirectAttributes.addFlashAttribute(Constants.ERROR_ATTRIBUTE, e.getMessage());
         }
-        return REDIRECT_DASHBOARD;
+        return Constants.REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/category/delete/{id}")
@@ -62,9 +61,9 @@ public class AdminDashboardController {
         try {
             toyCategoryService.deleteById(id);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, "Toy category can't be deleted.");
+            redirectAttributes.addFlashAttribute(Constants.ERROR_ATTRIBUTE, "Toy category can't be deleted.");
         }
-        return REDIRECT_DASHBOARD;
+        return Constants.REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/delete/{id}")
@@ -72,22 +71,22 @@ public class AdminDashboardController {
         try {
             toyService.deleteById(id);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, "Toy can't be deleted.");
+            redirectAttributes.addFlashAttribute(Constants.ERROR_ATTRIBUTE, "Toy can't be deleted.");
         }
-        return REDIRECT_DASHBOARD;
+        return Constants.REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/category/edit")
     public String editCategory(@ModelAttribute ToyCategoryDto categoryForm) {
         toyCategoryService.update(categoryForm.getId(), categoryForm);
-        return REDIRECT_DASHBOARD;
+        return Constants.REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/edit")
     public String editToy(@ModelAttribute ToyDto toyForm, @RequestParam(value = "image", required = false) MultipartFile imageFile
     ) {
         toyService.update(toyForm.getId(), toyForm, imageFile);
-        return REDIRECT_DASHBOARD;
+        return Constants.REDIRECT_DASHBOARD;
     }
 
     @PostMapping("/toy/search")

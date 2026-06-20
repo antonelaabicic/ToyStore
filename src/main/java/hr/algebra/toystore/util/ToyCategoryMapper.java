@@ -3,7 +3,7 @@ package hr.algebra.toystore.util;
 import hr.algebra.toystore.dto.ToyCategoryDto;
 import hr.algebra.toystore.model.ToyCategory;
 
-public class ToyCategoryMapper {
+public final class ToyCategoryMapper {
     private ToyCategoryMapper() {
         throw new UnsupportedOperationException("ToyCategoryMapper is a utility class.");
     }

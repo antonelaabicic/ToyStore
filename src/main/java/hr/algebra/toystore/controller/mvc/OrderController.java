@@ -8,6 +8,7 @@ import hr.algebra.toystore.dto.PaymentMethodDto;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.OrderSearchForm;
 import hr.algebra.toystore.service.*;
+import hr.algebra.toystore.util.Constants;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,6 @@ public class OrderController {
     private final ApplicationUserService applicationUserService;
     private final UserSessionService userSessionService;
     private final PayPalService payPalService;
-
-    private static final String ORDERS = "orders";
 
     private String getSessionId() {
         return userSessionService.getCurrentSessionId();
@@ -60,7 +59,7 @@ public class OrderController {
     @GetMapping("/my")
     public String viewUserOrders(Principal principal, Model model) {
         UserDto userDto = applicationUserService.findByUsername(principal.getName());
-        model.addAttribute(ORDERS, orderService.getOrdersByUser(userDto));
+        model.addAttribute(Constants.ORDERS, orderService.getOrdersByUser(userDto));
         return "order/my_orders";
     }
 
@@ -76,11 +75,18 @@ public class OrderController {
     ) {
         if (!orderSearchFormValidator.isValid(searchForm)) {
             model.addAttribute("error", "Start date must be before end date.");
-            model.addAttribute(ORDERS, List.of());
+            model.addAttribute(Constants.ORDERS, List.of());
             return "order/all_orders";
         }
 
-        model.addAttribute(ORDERS, orderService.searchOrders(searchForm));
+        model.addAttribute(Constants.ORDERS, orderService.searchOrders(searchForm));
+        return "order/all_orders";
+    }
+
+    @GetMapping("/all")
+    public String showAllOrdersPage(Model model) {
+        model.addAttribute("searchForm", new OrderSearchForm());
+        model.addAttribute(Constants.ORDERS, List.of());
         return "order/all_orders";
     }
 

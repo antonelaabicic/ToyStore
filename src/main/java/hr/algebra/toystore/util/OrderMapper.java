@@ -4,7 +4,7 @@ import hr.algebra.toystore.dto.OrderDto;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.Order;
 
-public class OrderMapper {
+public final class OrderMapper {
 
     private OrderMapper() {
         throw new UnsupportedOperationException("OrderMapper is a utility class.");

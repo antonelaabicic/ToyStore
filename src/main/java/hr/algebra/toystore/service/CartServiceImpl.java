@@ -7,6 +7,7 @@ import hr.algebra.toystore.model.Toy;
 import hr.algebra.toystore.repository.CartRepository;
 import hr.algebra.toystore.repository.ToyRepository;
 import hr.algebra.toystore.util.CartMapper;
+import hr.algebra.toystore.util.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,6 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final ToyRepository toyRepository;
-
-    private static final String CART_NOT_FOUND_MESSAGE = "Cart not found.";
 
     @Override
     public CartDto getCart(String sessionId) {
@@ -58,7 +57,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void updateItemQuantity(String sessionId, Integer itemId, int quantity) {
-        Cart cart = cartRepository.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException(CART_NOT_FOUND_MESSAGE));
+        Cart cart = cartRepository.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException(Constants.CART_NOT_FOUND_MESSAGE));
 
         cart.getItems().stream()
                 .filter(item -> item.getId().equals(itemId))
@@ -70,14 +69,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeItem(String sessionId, Integer itemId) {
-        Cart cart = cartRepository.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException(CART_NOT_FOUND_MESSAGE));
+        Cart cart = cartRepository.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException(Constants.CART_NOT_FOUND_MESSAGE));
         cart.getItems().removeIf(item -> item.getId().equals(itemId));
         cartRepository.save(cart);
     }
 
     @Override
     public void clearCart(String sessionId) {
-        Cart cart = cartRepository.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException(CART_NOT_FOUND_MESSAGE));
+        Cart cart = cartRepository.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException(Constants.CART_NOT_FOUND_MESSAGE));
         cart.getItems().clear();
         cartRepository.save(cart);
     }

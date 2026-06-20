@@ -3,7 +3,7 @@ package hr.algebra.toystore.util;
 import hr.algebra.toystore.dto.UserDto;
 import hr.algebra.toystore.model.ApplicationUser;
 
-public class UserMapper {
+public final class UserMapper {
     private UserMapper() {
         throw new UnsupportedOperationException("UserMapper is a utility class.");
     }

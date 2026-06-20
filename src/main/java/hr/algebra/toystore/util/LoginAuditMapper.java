@@ -3,7 +3,7 @@ package hr.algebra.toystore.util;
 import hr.algebra.toystore.dto.LoginAuditDto;
 import hr.algebra.toystore.model.LoginAudit;
 
-public class LoginAuditMapper {
+public final class LoginAuditMapper {
     private LoginAuditMapper() {
         throw new UnsupportedOperationException("LoginAuditMapper is a utility class.");
     }

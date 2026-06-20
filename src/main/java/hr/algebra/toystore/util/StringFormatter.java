@@ -3,7 +3,7 @@ package hr.algebra.toystore.util;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class StringFormatter {
+public final class StringFormatter {
     private StringFormatter() {
         throw new UnsupportedOperationException("StringFormatter is a utility class.");
     }
