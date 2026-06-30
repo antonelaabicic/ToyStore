@@ -3,6 +3,7 @@ package hr.algebra.toystore.dto;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ToyDto {
 
     private Integer id;

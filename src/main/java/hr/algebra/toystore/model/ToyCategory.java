@@ -1,10 +1,7 @@
 package hr.algebra.toystore.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "TOY_CATEGORY")
@@ -12,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode
+@Builder
 public class ToyCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

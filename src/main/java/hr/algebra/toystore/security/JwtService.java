@@ -1,4 +1,4 @@
-package hr.algebra.toystore.service;
+package hr.algebra.toystore.security;
 
 import hr.algebra.toystore.model.ApplicationRole;
 import hr.algebra.toystore.model.ApplicationUser;

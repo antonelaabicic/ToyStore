@@ -1,6 +1,6 @@
 package hr.algebra.toystore.configuration;
 
-import hr.algebra.toystore.filter.JwtAuthFilter;
+import hr.algebra.toystore.security.JwtAuthFilter;
 import hr.algebra.toystore.util.Constants;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthFilter jwtAuthFilter;
 
+    @SuppressWarnings("java:S4502")
     @Bean
     @Order(1)
     SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
@@ -74,13 +75,14 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    @SuppressWarnings("java:S4502")
     @Bean
     @Order(2)
     SecurityFilterChain mvcSecurity(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.ignoringRequestMatchers(
-                        "/h2-console/**", "/admin/toy/search"
+                        "/h2-console/**"
                 ))
 
                 .authorizeHttpRequests(auth -> auth
@@ -116,15 +118,15 @@ public class SecurityConfiguration {
                                 .contentSecurityPolicy(csp ->
                                         csp.policyDirectives(
                                                 "default-src 'self'; " +
-                                                        "script-src 'self' 'unsafe-inline'; " +
-                                                        "style-src 'self' 'unsafe-inline'; " +
-                                                        "img-src 'self' data: blob:; " +
-                                                        "font-src 'self'; " +
-                                                        "connect-src 'self'; " +
-                                                        "form-action 'self'; " +
-                                                        "object-src 'none'; " +
-                                                        "base-uri 'self'; " +
-                                                        "frame-ancestors 'self';"
+                                                "script-src 'self' 'unsafe-inline'; " +
+                                                "style-src 'self' 'unsafe-inline'; " +
+                                                "img-src 'self' data: blob:; " +
+                                                "font-src 'self'; " +
+                                                "connect-src 'self'; " +
+                                                "form-action 'self'; " +
+                                                "object-src 'none'; " +
+                                                "base-uri 'self'; " +
+                                                "frame-ancestors 'self';"
                                         )
                                 )
                 );

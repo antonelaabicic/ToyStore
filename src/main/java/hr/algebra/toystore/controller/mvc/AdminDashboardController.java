@@ -8,7 +8,6 @@ import hr.algebra.toystore.service.ToyCategoryService;
 import hr.algebra.toystore.service.ToyService;
 import hr.algebra.toystore.util.Constants;
 import hr.algebra.toystore.util.StringFormatter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static hr.algebra.toystore.util.Constants.SELECTED_CATEGORY_ID;
-
 @Controller
 @RequestMapping("/store")
 @AllArgsConstructor

@@ -22,7 +22,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
 
     public void registerNewUser(UserRegisterDto dto) {
         if (userRepository.findByUsername(dto.getUsername()) != null) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException("Username already exists.");
         }
 
         ApplicationRole userRole = roleRepository.findByName("ROLE_USER");

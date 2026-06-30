@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         ApplicationUser user = applicationUserService.findUserByUsername(userDto.getUsername());
 
         Order order = Order.builder()
-                .orderDate(LocalDateTime.now())
+                .orderDate(LocalDateTime.now(ZoneId.systemDefault()))
                 .paymentMethod(PaymentMethodMapper.toEntity(paymentMethodDto))
                 .cart(copiedCart)
                 .user(user)

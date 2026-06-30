@@ -68,6 +68,7 @@ public class OrderController {
         return new OrderSearchForm();
     }
 
+    @SuppressWarnings("java:S3516")
     @PostMapping("/all")
     public String viewAllOrders(
             @ModelAttribute("searchForm") OrderSearchForm searchForm,
@@ -76,18 +77,18 @@ public class OrderController {
         if (!orderSearchFormValidator.isValid(searchForm)) {
             model.addAttribute("error", "Start date must be before end date.");
             model.addAttribute(Constants.ORDERS, List.of());
-            return "order/all_orders";
+            return Constants.ALL_ORDERS;
         }
 
         model.addAttribute(Constants.ORDERS, orderService.searchOrders(searchForm));
-        return "order/all_orders";
+        return Constants.ALL_ORDERS;
     }
 
     @GetMapping("/all")
     public String showAllOrdersPage(Model model) {
         model.addAttribute("searchForm", new OrderSearchForm());
         model.addAttribute(Constants.ORDERS, List.of());
-        return "order/all_orders";
+        return Constants.ALL_ORDERS;
     }
 
     @GetMapping("/paypal/pay")

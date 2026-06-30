@@ -1,6 +1,5 @@
-package hr.algebra.toystore.filter;
+package hr.algebra.toystore.security;
 
-import hr.algebra.toystore.service.JwtService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

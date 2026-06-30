@@ -6,16 +6,18 @@ import hr.algebra.toystore.dto.RefreshTokenRequestDto;
 import hr.algebra.toystore.model.ApplicationUser;
 import hr.algebra.toystore.model.RefreshToken;
 import hr.algebra.toystore.service.ApplicationUserService;
-import hr.algebra.toystore.service.JwtService;
-import hr.algebra.toystore.service.RefreshTokenService;
+import hr.algebra.toystore.security.JwtService;
+import hr.algebra.toystore.security.RefreshTokenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,7 +58,10 @@ public class AuthController {
     public JwtResponseDto refreshToken(@RequestBody RefreshTokenRequestDto request) {
 
         RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken())
-                        .orElseThrow(() -> new IllegalArgumentException("Refresh token not found."));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Refresh token not found."
+                ));
         refreshTokenService.verifyExpiration(refreshToken);
 
         RefreshToken newRefreshToken = refreshTokenService.rotateRefreshToken(refreshToken);
