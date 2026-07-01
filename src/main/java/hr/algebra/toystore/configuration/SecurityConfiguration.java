@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/login", "/api/auth/refresh",
-                                "/api/demo/sql/**", "/api/demo/ssrf/**")
+                                "/api/demo/sql/**", "/api/demo/ssrf/**", "/api/demo/deserialization/**")
                         .permitAll()
 
                         .requestMatchers("/api/auth/revoke/**")

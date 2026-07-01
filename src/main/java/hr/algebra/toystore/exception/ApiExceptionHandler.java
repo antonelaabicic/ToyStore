@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.InvalidClassException;
+import java.io.StreamCorruptedException;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -20,6 +22,20 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity
+                .badRequest()
+                .body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidClassException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidClass(InvalidClassException ex) {
+        return ResponseEntity
+                .badRequest()
+                .body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(StreamCorruptedException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidSerialization(StreamCorruptedException ex) {
         return ResponseEntity
                 .badRequest()
                 .body(Map.of("error", ex.getMessage()));
