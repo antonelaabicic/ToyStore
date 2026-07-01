@@ -31,7 +31,6 @@ public class SecurityConfiguration {
     @Bean
     @Order(1)
     SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
-
         http
                 .securityMatcher("/api/**")
                 .csrf(AbstractHttpConfigurer::disable)
@@ -39,7 +38,9 @@ public class SecurityConfiguration {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login", "/api/auth/refresh").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/refresh",
+                                "/api/demo/sql/**", "/api/demo/ssrf/**")
+                        .permitAll()
 
                         .requestMatchers("/api/auth/revoke/**")
                         .hasRole(Constants.ADMIN)
@@ -79,7 +80,6 @@ public class SecurityConfiguration {
     @Bean
     @Order(2)
     SecurityFilterChain mvcSecurity(HttpSecurity http) throws Exception {
-
         http
                 .csrf(csrf -> csrf.ignoringRequestMatchers(
                         "/h2-console/**"
@@ -89,7 +89,7 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 "/toystore/**", "/store/**", "/cart/**", "/images/**", "/css/**",
                                 "/js/**", "/user/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**"
-                        )
+                                )
                         .permitAll()
 
                         .requestMatchers("/orders/**")

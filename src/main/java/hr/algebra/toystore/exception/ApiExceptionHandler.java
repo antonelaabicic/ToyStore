@@ -12,9 +12,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, String>> handle(ResponseStatusException ex) {
-
         String message = ex.getReason() != null ? ex.getReason() : "Unexpected error.";
-
         return ResponseEntity
                 .status(ex.getStatusCode())
                 .body(Map.of("error", message));
@@ -22,7 +20,6 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
-
         return ResponseEntity
                 .badRequest()
                 .body(Map.of("error", ex.getMessage()));
