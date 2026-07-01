@@ -1,4 +1,4 @@
-package hr.algebra.toystore.api;
+package hr.algebra.toystore.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.algebra.toystore.dto.JwtResponseDto;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthApiIT {
+class AuthApiTest {
     @Autowired
     private MockMvc mockMvc;
 
